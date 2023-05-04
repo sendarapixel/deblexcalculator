@@ -1,29 +1,64 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
-    <title>Calculadora de Precio en Libras</title>
+    <title>Calculadora de Precios</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <form id="formulario">
-            <div class="form-group">
-                <label for="precio-unitario">Precio Unitario:</label>
-                <input type="number" step="0.01" class="form-control" id="precio-unitario" required>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad:</label>
-                <input type="number" class="form-control" id="cantidad" required>
-            </div>
-            <div class="form-group">
-                <label for="peso">Peso en Libras:</label>
-                <input type="number" step="0.001" class="form-control" id="peso" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Calcular Precio en Libras</button>
-        </form>
-        <div id="resultado" class="mt-5"></div>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Calculadora de Precios</h1>
+      <form id="formulario">
+        <div class="form-group">
+          <label for="precio-unitario">Precio Unitario:</label>
+          <input type="number" step="0.01" class="form-control" id="precio-unitario" required>
+        </div>
+        <div class="form-group">
+          <label for="cantidad">Cantidad:</label>
+          <input type="number" class="form-control" id="cantidad" required>
+        </div>
+        <div class="form-group">
+          <label for="peso-lbs">Peso (lbs):</label>
+          <input type="number" step="0.001" class="form-control" id="peso-lbs" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+      <div class="mt-3">
+        <h3>Total en libras:</h3>
+        <span id="total-lbs"></span>
+      </div>
     </div>
-    <script src="main.js"></script>
-</body>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+      // Cargar la base de datos XML
+      var xmlDoc = null;
+      var costoLibra = 0;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          xmlDoc = this.responseXML;
+          costoLibra = parseFloat(xmlDoc.getElementsByTagName("costo")[0].childNodes[0].nodeValue);
+        }
+      };
+      xhttp.open("GET", "db.xml", true);
+      xhttp.send();
+
+      // Controlador de eventos para el formulario
+      $('#formulario').submit(function(event) {
+        event.preventDefault();
+        calcularPrecio();
+      });
+
+      // Función para calcular el precio total en libras
+      function calcularPrecio() {
+        var precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
+        var cantidad = parseInt(document.getElementById("cantidad").value);
+        var pesoLbs = parseFloat(document.getElementById("peso-lbs").value);
+        var totalLbs = (precioUnitario * cantidad) / (costoLibra * pesoLbs);
+        document.getElementById("total-lbs").innerHTML = totalLbs.toFixed(2);
+      }
+    </script>
+  </body>
 </html>
