@@ -1,45 +1,35 @@
-let xmlDoc;
-let costoLibra;
+// Event listener para el botón "Calcular"
+document.getElementById("calcular-btn").addEventListener("click", function(event) {
+  event.preventDefault();
+  const precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
+  const cantidad = parseFloat(document.getElementById("cantidad").value);
+  const costoTotal = calcularCostoTotal();
 
-// Cargar la base de datos XML
-let xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        xmlDoc = this.responseXML;
-        costoLibra = parseFloat(xmlDoc.getElementsByTagName("price")[0].getElementsByTagName("costo")[0].childNodes[0].nodeValue);
-        procesarBaseDeDatos(xmlDoc);
-    }
-};
-xhttp.open("GET", "db.xml", true);
-xhttp.send();
+  // Mostramos el costo total en la página
+  document.getElementById("costo-total").innerHTML = `$ ${costoTotal}`;
 
-// Procesar los datos del formulario y calcular el precio total
-let form = document.querySelector("#formulario");
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    let precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
-    let cantidad = parseInt(document.getElementById("cantidad").value);
-    let peso = parseFloat(document.getElementById("peso").value);
-    let precioTotal = precioUnitario * cantidad * peso * costoLibra;
-    let resultado = document.getElementById("resultado");
-    resultado.innerHTML = `El precio total en libras es: ${precioTotal.toFixed(2)}`;
+  // Creamos la tabla de la factura
+  const tablaFactura = `
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio Unitario</th>
+          <th scope="col">Costo Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Producto 1</td>
+          <td>${cantidad}</td>
+          <td>$ ${precioUnitario.toFixed(2)}</td>
+          <td>$ ${costoTotal}</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+
+  // Insertamos la tabla en la página
+  document.getElementById("factura").innerHTML = tablaFactura;
 });
-
-// Procesar la base de datos XML
-function procesarBaseDeDatos(xmlDoc) {
-    let precios = xmlDoc.getElementsByTagName("price");
-    let tablaPrecios = document.getElementById("tabla-precios");
-    for (let i = 0; i < precios.length; i++) {
-        let id = precios[i].getElementsByTagName("id")[0].childNodes[0].nodeValue;
-        let peso = precios[i].getElementsByTagName("peso")[0].childNodes[0].nodeValue;
-        let costo = precios[i].getElementsByTagName("costo")[0].childNodes[0].nodeValue;
-        let fila = `
-            <tr>
-                <td>${id}</td>
-                <td>${peso}</td>
-                <td>${costo}</td>
-            </tr>
-        `;
-        tablaPrecios.innerHTML += fila;
-    }
-}
