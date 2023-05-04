@@ -2,57 +2,93 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Delbex Calculadora</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="app.js"></script>
-    <script src="main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con Bootstrap y JavaScript</title>
+    <!-- Agregar los archivos CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Delbex Calculadora</a>
-</nav>
-
-<div class="container my-5">
-  <h1>Calculadora de Precios</h1>
-  <form>
-    <div class="form-group">
-      <label for="precio-unitario">Precio Unitario:</label>
-      <input type="number" step="0.01" class="form-control" id="precio-unitario" required>
+    <div class="container mt-5">
+        <h1>Formulario con Bootstrap y JavaScript</h1>
+        <form>
+            <div class="form-group">
+                <label for="precio">Precio Unitario:</label>
+                <input type="text" class="form-control" id="precio" name="precio">
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad de producto:</label>
+                <input type="text" class="form-control" id="cantidad" name="cantidad">
+            </div>
+            <div class="form-group">
+                <label for="peso">Peso en libras:</label>
+                <input type="text" class="form-control" id="peso" name="peso">
+            </div>
+            <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
+        </form>
+        <div class="mt-5">
+            <h2>Total de Compra: <span id="total"></span></h2>
+            <h2>Costo de Envío: <span id="envio"></span></h2>
+        </div>
     </div>
-    <div class="form-group">
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" class="form-control" id="cantidad" required>
-    </div>
-    <button type="button" class="btn btn-primary" id="calcular-btn">Calcular</button>
-  </form>
-</div>
 
-<div class="container my-5">
-  <h2>Factura</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Descripción</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Producto 1</td>
-        <td id="cantidad-factura"></td>
-        <td id="precio-unitario-factura"></td>
-        <td id="total-factura"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span>Creado por Sendara Pixel</span>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Instagram</a>
+        </div>
+    </footer>
 
-<footer class="bg-light text-center py-3">
-  Creaste by <a href="https://instagram.com/sendarapixel" target="_blank">Sendara Pixel</a>. Todos los derechos reservados.
-</footer>
+    <!-- Agregar los archivos JavaScript de Bootstrap y el código de JavaScript personalizado -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper-base.min.js"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script >
+        
+        
+        
+        
+        // Obtener los elementos del formulario y del resultado
+const form = document.querySelector('form');
+const precioInput = document.getElementById('precio');
+const cantidadInput = document.getElementById('cantidad');
+const pesoInput = document.getElementById('peso');
+const totalSpan = document.getElementById('total');
+const envioSpan = document.getElementById('envio');
+
+// Agregar un listener al evento submit del formulario
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Evitar la recarga de la página
+
+    // Obtener los valores de los inputs del formulario
+    const precio = parseFloat(precioInput.value);
+    const cantidad = parseInt(cantidadInput.value);
+    const peso = parseFloat(pesoInput.value);
+
+    // Calcular el total de compra y el costo de envío
+    const total = precio * cantidad;
+    let envio = 0;
+
+    // Realizar una petición AJAX para obtener el costo de envío
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const xmlDoc = xhr.responseXML;
+            const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
+            const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
+            envio = cantidad * peso * costo / libras;
+            envioSpan.innerText = envio.toFixed(2);
+        }
+    };
+    xhr.open('GET', 'database.xml', true);
+    xhr.send();
+
+    // Mostrar los resultados en la página
+    totalSpan.innerText = total.toFixed(2);
+});
+
+    </script>
 
 </body>
 </html>
