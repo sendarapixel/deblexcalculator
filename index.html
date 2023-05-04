@@ -35,7 +35,7 @@
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por </span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel </a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel c </a>
         </div>
     </footer>
 
@@ -67,7 +67,7 @@ form.addEventListener('submit', function(event) {
     const peso = parseFloat(pesoInput.value);
 
     // Calcular el total de compra y el costo de envío
-    const total = precio * cantidad;
+    const total = "$" + precio * cantidad;
     let envio = 0;
 
     // Realizar una petición AJAX para obtener el costo de envío
@@ -77,7 +77,7 @@ form.addEventListener('submit', function(event) {
             const xmlDoc = xhr.responseXML;
             const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
-            envio = cantidad * peso * costo / libras;
+            envio = "$" + cantidad * peso * costo;
             envioSpan.innerText = envio.toFixed(2);
         }
     };
@@ -88,7 +88,7 @@ form.addEventListener('submit', function(event) {
     totalSpan.innerText = total.toFixed(2);
 
     //} else {
-    alert("La base de datos aún no se ha cargado.");
+    //alert("La base de datos aún no se ha cargado.");
   //}
         
     });
