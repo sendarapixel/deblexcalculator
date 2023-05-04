@@ -34,8 +34,8 @@
 
     <footer class="footer mt-auto py-3">
         <div class="container">
-            <span>Creado por </span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel </a>
+            <span>Creado por</span>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel v </a>
         </div>
     </footer>
 
@@ -68,7 +68,7 @@ form.addEventListener('submit', function(event) {
     
 
     // Obtener el costo de envío
-    fetch('database.xml')
+    fetch('db.xml')
         .then(response => response.text())
         .then(text => {
             const parser = new DOMParser();
