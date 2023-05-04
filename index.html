@@ -30,12 +30,13 @@
             <h2>Total de Compra: <span id="total"></span></h2>
             <h2>Costo de Envío: <span id="envio"></span></h2>
         </div>
+        <div class="continer" id="gtt"></div>
     </div>
 
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por</span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel v </a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel</a>
         </div>
     </footer>
 
@@ -52,7 +53,7 @@ const cantidadInput = document.getElementById('cantidad');
 const pesoInput = document.getElementById('peso');
 const totalSpan = document.getElementById('total');
 const envioSpan = document.getElementById('envio');
-const gastosDiv = document.getElementById('gastos');
+const gastosDiv = document.getElementById('gtt');
 
 // Agregar un listener al evento submit del formulario
 form.addEventListener('submit', function(event) {
@@ -77,6 +78,7 @@ form.addEventListener('submit', function(event) {
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
             const envio = cantidad * peso * costo;
             envioSpan.innerText = envio.toFixed(2);
+            
             totalSpan.innerText = total.toFixed(2);
 
             // Calcular los gastos totales
