@@ -35,7 +35,7 @@
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por </span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel </a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel n</a>
         </div>
     </footer>
 
@@ -64,10 +64,9 @@ form.addEventListener('submit', function(event) {
 
     // Calcular el total de compra
     const total = precio * cantidad;
-    totalSpan.innerText = total.toFixed(2);
-
+    
     // Obtener el costo de envío
-    fetch('database.xml')
+    fetch('db.xml')
         .then(response => response.text())
         .then(text => {
             const parser = new DOMParser();
@@ -76,9 +75,12 @@ form.addEventListener('submit', function(event) {
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
             const envio = cantidad * peso * costo / libras;
             envioSpan.innerText = envio.toFixed(2);
+            
+            totalSpan.innerText = total.toFixed(2);
+
         })
         .catch(error => {
-            alert('Error al obtener el archivo XML:', error);
+            alert('Error al obtener la base de datos, contacte con el creado en la parte de abajo:', error);
         });
 });
 
