@@ -35,7 +35,7 @@
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por </span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel</a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel c</a>
         </div>
     </footer>
 
@@ -45,11 +45,7 @@
       crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script >
-        
-        
-        
-        
-        // Obtener los elementos del formulario y del resultado
+// Obtener los elementos del formulario y del resultado
 const form = document.querySelector('form');
 const precioInput = document.getElementById('precio');
 const cantidadInput = document.getElementById('cantidad');
@@ -81,20 +77,12 @@ form.addEventListener('submit', function(event) {
             envioSpan.innerText = envio.toFixed(2);
         }
     };
-    xhr.open('GET', 'db.xml', true);
+    xhr.open('GET', 'database.xml', true);
     xhr.send();
-    //if (xhr !== null) {
+
     // Mostrar los resultados en la página
     totalSpan.innerText = total.toFixed(2);
-
-    //} else {
-    //alert("La base de datos aún no se ha cargado.");
-  //}
-        
-    });
-
-
-
+});
 
     </script>
 
