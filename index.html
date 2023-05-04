@@ -56,7 +56,8 @@
         var precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
         var cantidad = parseInt(document.getElementById("cantidad").value);
         var pesoLbs = parseFloat(document.getElementById("peso-lbs").value);
-        var totalLbs = (precioUnitario * cantidad) / (costoLibra * pesoLbs);
+        var precioTotal = cantidad * costoLibra * pesoLbs * precioUnitario;
+        var totalLbs = precioTotal / costoLibra;
         document.getElementById("total-lbs").innerHTML = totalLbs.toFixed(2);
       }
     </script>
