@@ -10,7 +10,7 @@
 <body>
 
     <div class="container mt-5">
-        <h1>Formulario con Bootstrap y JavaScript</h1>
+        <h1>Calculadora Derblex Ecuador</h1>
         <form>
             <div class="form-group">
                 <label for="precio">Precio Unitario:</label>
@@ -34,8 +34,8 @@
 
     <footer class="footer mt-auto py-3">
         <div class="container">
-            <span>Creado por Sendara Pixel</span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Instagram</a>
+            <span>Creado por </span>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel C.A</a>
         </div>
     </footer>
 
@@ -77,7 +77,7 @@ form.addEventListener('submit', function(event) {
             const xmlDoc = xhr.responseXML;
             const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
-            envio = cantidad * peso * costo / libras;
+            envio = cantidad * peso * costo;
             envioSpan.innerText = envio.toFixed(2);
         }
     };
