@@ -36,7 +36,7 @@
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por</span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel</a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel C.A 1</a>
         </div>
     </footer>
 
@@ -76,14 +76,36 @@ form.addEventListener('submit', function(event) {
             const xmlDoc = parser.parseFromString(text, 'text/xml');
             const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
-            const envio = cantidad * peso * costo;
-            envioSpan.innerText = envio.toFixed(2);
+            const envio = cantidad * peso * costo / libras;
+           // envioSpan.innerText = envio.toFixed(2);
             
-            totalSpan.innerText = total.toFixed(2);
+           // totalSpan.innerText = total.toFixed(2);
 
             // Calcular los gastos totales
             const gastos = total + envio;
             gastosDiv.innerHTML = `
+            
+            
+            
+            
+                <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Info</th>
+      <th scope="col">$USD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Total de compra</th>
+      <td>{total.toFixed(2)}</td>
+    </tr>
+     <tr>
+      <th scope="row">Costo de envio</th>
+      <td>{envio.toFixed(2)}</td>
+    </tr>
+  </tbody>
+</table>
                 <div class="bg-secondary text-white p-2">
                     Total de gastos: ${gastos.toFixed(2)}
                 </div>
