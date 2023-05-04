@@ -35,7 +35,7 @@
     <footer class="footer mt-auto py-3">
         <div class="container">
             <span>Creado por </span>
-            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel c</a>
+            <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel </a>
         </div>
     </footer>
 
@@ -62,26 +62,24 @@ form.addEventListener('submit', function(event) {
     const cantidad = parseInt(cantidadInput.value);
     const peso = parseFloat(pesoInput.value);
 
-    // Calcular el total de compra y el costo de envío
+    // Calcular el total de compra
     const total = precio * cantidad;
-    let envio = 0;
+    totalSpan.innerText = total.toFixed(2);
 
-    // Realizar una petición AJAX para obtener el costo de envío
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const xmlDoc = xhr.responseXML;
+    // Obtener el costo de envío
+    fetch('database.xml')
+        .then(response => response.text())
+        .then(text => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(text, 'text/xml');
             const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
-            envio = cantidad * peso * costo;
+            const envio = cantidad * peso * costo / libras;
             envioSpan.innerText = envio.toFixed(2);
-        }
-    };
-    xhr.open('GET', 'database.xml', true);
-    xhr.send();
-
-    // Mostrar los resultados en la página
-    totalSpan.innerText = total.toFixed(2);
+        })
+        .catch(error => {
+            alert('Error al obtener el archivo XML:', error);
+        });
 });
 
     </script>
