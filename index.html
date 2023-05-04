@@ -77,16 +77,24 @@ form.addEventListener('submit', function(event) {
             const xmlDoc = xhr.responseXML;
             const libras = parseFloat(xmlDoc.getElementsByTagName('libras')[0].childNodes[0].nodeValue);
             const costo = parseFloat(xmlDoc.getElementsByTagName('costo')[0].childNodes[0].nodeValue);
-            envio = cantidad * peso * costo;
+            envio = cantidad * peso * costo / libras;
             envioSpan.innerText = envio.toFixed(2);
         }
     };
-    xhr.open('GET', 'database.xml', true);
+    xhr.open('GET', 'db.xml', true);
     xhr.send();
-
+    if (xhr !== null) {
     // Mostrar los resultados en la página
     totalSpan.innerText = total.toFixed(2);
-});
+
+    } else {
+    alert("La base de datos aún no se ha cargado.");
+  }
+        
+    });
+
+
+
 
     </script>
 
