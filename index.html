@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo de base de datos en XML con Bootstrap y JavaScript</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Ejemplo de base de datos en XML con Bootstrap y JavaScript</h1>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-usuarios">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                procesarBaseDeDatos(this);
+            }
+        };
+        xhttp.open("GET", "base-de-datos.xml", true);
+        xhttp.send();
+
+        function procesarBaseDeDatos(xml) {
+            let xmlDoc = xml.responseXML;
+            let usuarios = xmlDoc.getElementsByTagName("usuario");
+            let tablaUsuarios = document.getElementById("tabla-usuarios");
+
+            for (let i = 0; i < usuarios.length; i++) {
+                let id = usuarios[i].getElementsByTagName("id")[0].childNodes[0].nodeValue;
+                let nombre = usuarios[i].getElementsByTagName("nombre")[0].childNodes[0].nodeValue;
+                let edad = usuarios[i].getElementsByTagName("edad")[0].childNodes[0].nodeValue;
+
+                let fila = document.createElement("tr");
+                fila.innerHTML = "<td>" + id + "</td><td>" + nombre + "</td><td>" + edad + "</td>";
+                tablaUsuarios.appendChild(fila);
+            }
+        }
+    </script>
+</body>
+</html>
