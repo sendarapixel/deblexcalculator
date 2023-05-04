@@ -53,13 +53,20 @@
 
       // Función para calcular el precio total en libras
       function calcularPrecio() {
-        var precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
-        var cantidad = parseInt(document.getElementById("cantidad").value);
-        var pesoLbs = parseFloat(document.getElementById("peso-lbs").value);
-        var precioTotal = cantidad * costoLibra * pesoLbs * precioUnitario;
-        var totalLbs = precioTotal / costoLibra;
-        document.getElementById("total-lbs").innerHTML = totalLbs.toFixed(2);
-      }
+  var precioUnitario = parseFloat(document.getElementById("precio-unitario").value);
+  var cantidad = parseInt(document.getElementById("cantidad").value);
+  var pesoLbs = parseFloat(document.getElementById("peso-lbs").value);
+  
+  if (xmlDoc !== null) {
+    var costoLibra = parseFloat(xmlDoc.getElementsByTagName("costo")[0].childNodes[0].nodeValue);
+    var precioTotal = cantidad * costoLibra * pesoLbs * precioUnitario;
+    var totalLbs = precioTotal / costoLibra;
+    document.getElementById("total-lbs").innerHTML = totalLbs.toFixed(2);
+  } else {
+    alert("La base de datos aún no se ha cargado, por favor espera unos momentos antes de hacer el cálculo.");
+  }
+}
+
     </script>
   </body>
 </html>
