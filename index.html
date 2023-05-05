@@ -37,7 +37,7 @@
         <div class="container">
             <span>Creado por</span>
             <a href="https://www.instagram.com/sendarapixel/" target="_blank" class="ml-2">Sendara Pixel C.A</a>
-            <span> V 1.0</span>
+            <span> V 1.1</span>
         </div>
     </footer>
 
@@ -102,10 +102,10 @@ const iva = 1.12;
 const valorfinal = redondearValor(pesoInput);
 const limit = 8;
 
-if (valorfinal > limit){
-    alert("Has llegado al limite de envio 4x4 de 8lb contacta a tu asedor de Deblex si deseas enviar mas de ese peso");
-    return false;
-} else {
+//if (valorfinal > limit){
+    //alert("Has llegado al limite de envio 4x4 de 8lb contacta a tu asedor de Deblex si deseas enviar mas de ese peso");
+    //return false;
+//} else {
     
 
 
@@ -134,9 +134,10 @@ form.addEventListener('submit', function(event) {
            // envioSpan.innerText = envio.toFixed(2);
             
            // totalSpan.innerText = total.toFixed(2);
-
+           const cliva =
+ envio * iva - envio;
             // Calcular los gastos totales
-            const gastos = total + envio;
+            const gastos = total + envio * iva;
             gastosDiv.innerHTML = `
             
             
@@ -164,11 +165,11 @@ form.addEventListener('submit', function(event) {
     </tr>
           <tr>
       <th scope="row">IVA 12%</th>
-      <td>${ envio * iva - envio}</td>
+      <td>${cliva.toFixed(2)}</td>
     </tr>
      <tr>
       <th scope="row">Costo de envio</th>
-      <td>${iva * envio.toFixed(2)}</td>
+      <td>${envio.toFixed(2)}</td>
     </tr>
   </tbody>
 </table>
@@ -182,7 +183,7 @@ form.addEventListener('submit', function(event) {
         });
 });
 
-}
+//}
 
     </script>
 
